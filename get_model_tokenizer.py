@@ -10,11 +10,11 @@ def get_model_tokenizer():
     return model, tokenizer
 
 class MyModel(nn.Module):
-    def __init__(self):
+    def __init__(self, bert):
         
         super(MyModel, self).__init__()
         
-        self.bert, _ = get_model_tokenizer()
+        self.bert = bert
         self.dropout = nn.Dropout(0.25)
         self.linear = nn.Linear(768, 1)
         self.sigmoid = nn.Sigmoid()

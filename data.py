@@ -17,7 +17,7 @@ _, tokenizer = get_model_tokenizer()
 class dataset(Dataset):
     def __init__(self, X, Y):
         self.X = [tokenizer(x, 
-                            max_length = 250,
+                            max_length = 100,
                             truncation = True,
                             padding = 'max_length',
                             return_tensors='pt').to("mps")
