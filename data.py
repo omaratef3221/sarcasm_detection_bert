@@ -20,11 +20,11 @@ class dataset(Dataset):
                             max_length = 250,
                             truncation = True,
                             padding = 'max_length',
-                            return_tensors='pt') 
+                            return_tensors='pt').to("mps")
                   for x in X
                  ] 
         
-        self.Y = Y
+        self.Y = torch.tensor(Y).to("mps")
     def __len__(self):
         return len(self.X)
     def __getitem__(self, index):

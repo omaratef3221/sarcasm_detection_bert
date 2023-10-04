@@ -14,7 +14,7 @@ DEVICE = torch.device("mps") # for Nvidia put it as CUDA
 
 training_data, testing_data = get_datasets()
 
-model = MyModel()
+model = MyModel().to(DEVICE)
 
 criterion = nn.BCELoss()
 optimizer = (Adam(model.parameters(), lr= LR))
@@ -25,13 +25,15 @@ optimizer = (Adam(model.parameters(), lr= LR))
 
 def train_model():
     train_dataloader = DataLoader(training_data, batch_size=BATCH_SIZE, shuffle= True)
-
     for epoch in range(EPOCHS):
         total_acc_train = 0
         total_loss_train = 0
         for indx, data in enumerate(train_dataloader):
             input, label = data
         
+            input.to(DEVICE)
+            label.to(DEVICE)
+            
             prediction = model(input['input_ids'].reshape(8,250), 
                                input['attention_mask'].reshape(8,250))
             
@@ -43,8 +45,6 @@ def train_model():
             model.zero_grad()
             batch_loss.backward()
             optimizer.step()
-            if indx == 3:
-                break
         print(f"Epoch no. {str(epoch)} Loss: {str(total_loss_train)} Accuracy: {str(total_acc_train)}")
         break
             
